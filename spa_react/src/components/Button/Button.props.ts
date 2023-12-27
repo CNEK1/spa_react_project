@@ -5,7 +5,6 @@ export interface ButtonProps
     ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
-  children: ReactNode,
-  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  children: ReactNode
   //appereance: 'primary' | 'ghost';
 }

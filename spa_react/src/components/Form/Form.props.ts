@@ -1,6 +1,6 @@
-import { HTMLAttributes, DetailedHTMLProps } from 'react';
+import Memory from '../../types/global';
 
 export interface FormProps
-  extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-
+  {
+    onSubmit: (formProps: Memory) => void;
   }

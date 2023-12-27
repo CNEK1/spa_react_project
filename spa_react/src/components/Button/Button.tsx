@@ -1,9 +1,9 @@
 import { ButtonProps } from './Button.props';
 import './button.css';
 
-function Button({children, onClick}:ButtonProps):JSX.Element {
+function Button({children}:ButtonProps):JSX.Element {
 	return (
-		<button onClick={onClick}  className='button accent'>{children}</button>
+		<button className='button accent'>{children}</button>
 	);
 }
 export default Button;
