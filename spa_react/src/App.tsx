@@ -12,10 +12,22 @@ import Memory from './types/global';
 
 
 function App():JSX.Element {
-  const [data, setData] = useState<Memory[]>([{title:'fgdgd',date:new Date(),text:'gfgf'}]);
+  const [data, setData] = useState<Memory[]>([{id:0,title:'Test Memory',date:new Date(),text:'Test Memory'}]);
 
   const addItem = (item:Memory):void => {
-      setData(oldItems => [...oldItems,item]);
+      setData(oldItems => [...oldItems,{
+        id: Math.max(...oldItems.map(i => i.id)) + 1,
+        text: item.text,
+        title: item.title,
+        date: new Date(item.date)
+      }]);
+  };
+  const sortMemories = (a:Memory,b:Memory) => {
+    if(a.date < b.date){
+      return 1;
+    } else{
+      return -1;
+    }
   };
   return (
     <div className='app'>
@@ -23,9 +35,9 @@ function App():JSX.Element {
       <Header/>
       <AddButton>+ New Memory</AddButton>
       <List>
-        {data ? data.map((elm) => 
-          <CardButton><Item title={elm.title} date={elm.date} text={elm.text}/></CardButton>
-        ) : <h1>No Memorys</h1>}
+        {data ? data.sort(sortMemories).map((elm) => 
+          <CardButton key={elm.id}><Item title={elm.title} date={elm.date} text={elm.text}/></CardButton>
+        ) : <h1>No Memories</h1>}
       </List>
     </LeftPanel>
     <Body>

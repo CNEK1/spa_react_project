@@ -12,6 +12,7 @@ const addNewMemory = (e: React.FormEvent<HTMLFormElement>) => {
 		const formData = new FormData(e.target);
 		const formProps = Object.fromEntries(formData);
 		const memory: Memory = {
+			id: 0,
 			title: formProps.title as string,
 			date: new Date(formProps.date as string),
 			text: formProps.text as string};
