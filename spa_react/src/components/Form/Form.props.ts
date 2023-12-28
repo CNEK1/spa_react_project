@@ -1,6 +1,5 @@
 import Memory from '../../types/global';
 
-export interface FormProps
-  {
+export interface FormProps {
     onSubmit: (formProps: Memory) => void;
-  }
+}

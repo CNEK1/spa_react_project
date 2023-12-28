@@ -1,8 +1,8 @@
 type Memory = {
-	id: number;
-	title: string;
-	date: Date;
-	text: string;
-             };
+    id: number;
+    title: string;
+    date: Date;
+    text: string;
+};
 
-export default Memory;             
+export default Memory;
