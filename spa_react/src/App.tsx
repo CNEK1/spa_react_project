@@ -1,4 +1,4 @@
-import './App.css';
+import styles from './App.module.css';
 import List from './components/List/List';
 import LeftPanel from './layout/LeftPanel/LeftPanel';
 import Body from './layout/body/Body';
@@ -23,7 +23,7 @@ function App(): JSX.Element {
     };
 
     return (
-        <div className="app">
+        <div className={styles.app}>
             <LeftPanel>
                 <Header />
                 <AddButton>+ New Memory</AddButton>

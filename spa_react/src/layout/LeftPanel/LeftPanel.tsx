@@ -1,7 +1,7 @@
 import { LeftPanelProps } from './LeftPanel.props';
-import './leftPanel.css';
+import styles from './leftPanel.module.css';
 
 function LeftPanel({ children }: LeftPanelProps): JSX.Element {
-    return <div className="left-panel">{children}</div>;
+    return <div className={styles['left-panel']}>{children}</div>;
 }
 export default LeftPanel;

@@ -1,7 +1,7 @@
 import { BodyProps } from './Body.props';
-import './body.css';
+import styles from './body.module.css';
 
 function Body({ children }: BodyProps): JSX.Element {
-    return <div className="body">{children}</div>;
+    return <div className={styles.body}>{children}</div>;
 }
 export default Body;

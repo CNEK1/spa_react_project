@@ -1,5 +1,5 @@
 import { CardButtonProps } from './CardButton.props';
-import './cardbutton.css';
+import './cardbutton.module.css';
 
 function CardButton({ children, className }: CardButtonProps): JSX.Element {
     const cl = 'card-button' + (className ? ' ' + className : '');

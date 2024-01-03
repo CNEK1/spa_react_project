@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import './form.css';
+import styles from './form.module.css';
 import Button from '../Button/Button';
 import { FormProps } from './Form.props';
 import Memory from '../../types/global';
 import { useState } from 'react';
+import classNames from 'classnames';
 
 function Form({ onSubmit }: FormProps): JSX.Element {
     const [formValidState, setFormValidState] = useState({
@@ -50,12 +51,23 @@ function Form({ onSubmit }: FormProps): JSX.Element {
         }
     };
     return (
-        <form className="form" onSubmit={addNewMemory}>
-            <input type="text" name="title" style={{ border: formValidState.title ? undefined : '3px solid red' }} />
-            {}
-            <input type="date" name="date" style={{ border: formValidState.date ? undefined : '3px solid red' }} />
-            <input type="text" name="tag" />
-            <textarea name="text" id="" style={{ border: formValidState.text ? undefined : '3px solid red' }}></textarea>
+        <form className={styles.form} onSubmit={addNewMemory}>
+            <div>
+                <input type="text" name="title" id="title" className={classNames(styles['input-title'], { [styles.invalid]: !formValidState.title })} />
+            </div>
+            <div className={styles['form-row']}>
+                <label htmlFor="date" className={styles['form-label']}>
+                    <span>Date</span>
+                </label>
+                <input type="date" name="date" id="date" className={classNames(styles.input, { [styles.invalid]: !formValidState.date })} />
+            </div>
+            <div className={styles['form-row']}>
+                <label htmlFor="tag" className={styles['form-label']}>
+                    <span>Tags</span>
+                </label>
+                <input type="text" name="tag" id="tag" className={classNames(styles.input)} />
+            </div>
+            <textarea name="text" id="text" className={classNames(styles.textarea, { [styles.invalid]: !formValidState.text })}></textarea>
             <Button>Save</Button>
         </form>
     );

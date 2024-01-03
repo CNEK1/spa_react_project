@@ -2,7 +2,7 @@ import Memory from '../../types/global';
 import CardButton from '../CardButton/CardButton';
 import Item from '../Item/Item';
 import { ListProps } from './List.props';
-import './list.css';
+import styles from './list.module.css';
 
 function List({ data }: ListProps): JSX.Element {
     const sortMemories = (a: Memory, b: Memory) => {
@@ -13,7 +13,7 @@ function List({ data }: ListProps): JSX.Element {
         }
     };
     return (
-        <div className="list">
+        <div className={styles.list}>
             {
                 <>
                     {data.length > 0 ? (
