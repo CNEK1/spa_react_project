@@ -5,11 +5,23 @@ import Body from './layout/body/Body';
 import Header from './components/Header/Header';
 import AddButton from './components/AddButton/AddButton';
 import Form from './components/Form/Form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Memory from './types/global';
 
 function App(): JSX.Element {
     const [data, setData] = useState<Memory[]>([]);
+    useEffect(() => {
+        const localStorageData: Memory[] = JSON.parse(localStorage.getItem('data')!);
+        console.log(localStorageData);
+        if (localStorageData) {
+            setData(
+                localStorageData.map((item) => ({
+                    ...item,
+                    date: new Date(item.date)
+                }))
+            );
+        }
+    }, []);
     const addItem = (item: Memory): void => {
         setData((oldItems) => [
             ...oldItems,

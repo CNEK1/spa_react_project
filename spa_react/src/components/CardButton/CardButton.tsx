@@ -1,8 +1,9 @@
 import { CardButtonProps } from './CardButton.props';
-import './cardbutton.module.css';
+import styles from './cardbutton.module.css';
+import classNames from 'classnames';
 
 function CardButton({ children, className }: CardButtonProps): JSX.Element {
-    const cl = 'card-button' + (className ? ' ' + className : '');
+    const cl = classNames(styles['card-button'], className);
     return <button className={cl}>{children}</button>;
 }
 export default CardButton;
