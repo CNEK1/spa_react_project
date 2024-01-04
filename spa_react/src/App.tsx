@@ -22,6 +22,11 @@ function App(): JSX.Element {
             );
         }
     }, []);
+    useEffect(() => {
+        if (data.length) {
+            localStorage.setItem('data', JSON.stringify(data));
+        }
+    }, [data]);
     const addItem = (item: Memory): void => {
         setData((oldItems) => [
             ...oldItems,

@@ -3,15 +3,28 @@ import styles from './form.module.css';
 import Button from '../Button/Button';
 import { FormProps } from './Form.props';
 import Memory from '../../types/global';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
+const INTIAL_STATE = {
+    title: true,
+    text: true,
+    date: true
+};
+
 function Form({ onSubmit }: FormProps): JSX.Element {
-    const [formValidState, setFormValidState] = useState({
-        title: true,
-        text: true,
-        date: true
-    });
+    const [formValidState, setFormValidState] = useState(INTIAL_STATE);
+    useEffect(() => {
+        let timeId: number;
+        if (!formValidState.date || !formValidState.text || !formValidState.title) {
+            timeId = setTimeout(() => {
+                setFormValidState(INTIAL_STATE);
+            }, 4000);
+        }
+        return () => {
+            clearTimeout(timeId);
+        };
+    }, [formValidState]);
     const addNewMemory = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (e.target instanceof HTMLFormElement) {
