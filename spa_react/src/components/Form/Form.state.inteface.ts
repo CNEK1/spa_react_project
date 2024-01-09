@@ -14,6 +14,8 @@ export interface FormState {
     isFormReadyToSubmit: boolean;
 }
 export enum FormActionKind {
+    SET_VALUES = 'SET_VALUES',
+    CLEAR = 'CLEAR',
     RESET_VALIDITY = 'RESET_VALIDITY',
     SUBMIT = 'SUBMIT'
 }
