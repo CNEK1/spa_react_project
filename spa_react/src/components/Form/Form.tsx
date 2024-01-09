@@ -3,62 +3,43 @@ import styles from './form.module.css';
 import Button from '../Button/Button';
 import { FormProps } from './Form.props';
 import Memory from '../../types/global';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import classNames from 'classnames';
-
-const INTIAL_STATE = {
-    title: true,
-    text: true,
-    date: true
-};
+import { INITIAL_STATE, formReducer } from './Form.state';
+import { FormActionKind } from './Form.state.inteface';
 
 function Form({ onSubmit }: FormProps): JSX.Element {
-    const [formValidState, setFormValidState] = useState(INTIAL_STATE);
+    const [formState, dispatchForm] = useReducer(formReducer, INITIAL_STATE);
+    const { isValid, isFormReadyToSubmit, values } = formState;
+
     useEffect(() => {
         let timeId: number;
-        if (!formValidState.date || !formValidState.text || !formValidState.title) {
+        if (!isValid.title || !isValid.text || !isValid.date) {
             timeId = setTimeout(() => {
-                setFormValidState(INTIAL_STATE);
+                dispatchForm({ type: FormActionKind.RESET_VALIDITY });
             }, 4000);
         }
         return () => {
             clearTimeout(timeId);
         };
-    }, [formValidState]);
+    }, [isValid]);
+    useEffect(() => {
+        if (isFormReadyToSubmit) {
+            onSubmit(values);
+        }
+    }, [isFormReadyToSubmit]);
     const addNewMemory = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (e.target instanceof HTMLFormElement) {
             const formData = new FormData(e.target);
             const formProps = Object.fromEntries(formData);
-            let isFormValid = true;
             const memory: Memory = {
                 id: 0,
                 title: formProps.title as string,
-                date: new Date(formProps.date as string),
+                date: new Date(formProps.date as string).toString(),
                 text: formProps.text as string
             };
-            if (!memory.title?.trim().length) {
-                setFormValidState((state) => ({ ...state, title: false }));
-                isFormValid = false;
-            } else {
-                setFormValidState((state) => ({ ...state, title: true }));
-            }
-            if (memory.date.toString() === 'Invalid Date') {
-                setFormValidState((state) => ({ ...state, date: false }));
-                isFormValid = false;
-            } else {
-                setFormValidState((state) => ({ ...state, date: true }));
-            }
-            if (!memory.text?.trim().length) {
-                setFormValidState((state) => ({ ...state, text: false }));
-                isFormValid = false;
-            } else {
-                setFormValidState((state) => ({ ...state, text: true }));
-            }
-            if (!isFormValid) {
-                return;
-            }
-            onSubmit(memory);
+            dispatchForm({ type: FormActionKind.SUBMIT, payload: memory });
         } else {
             console.error('Invalid Target');
         }
@@ -66,13 +47,13 @@ function Form({ onSubmit }: FormProps): JSX.Element {
     return (
         <form className={styles.form} onSubmit={addNewMemory}>
             <div>
-                <input type="text" name="title" id="title" className={classNames(styles['input-title'], { [styles.invalid]: !formValidState.title })} />
+                <input type="text" name="title" id="title" className={classNames(styles['input-title'], { [styles.invalid]: !isValid.title })} />
             </div>
             <div className={styles['form-row']}>
                 <label htmlFor="date" className={styles['form-label']}>
                     <span>Date</span>
                 </label>
-                <input type="date" name="date" id="date" className={classNames(styles.input, { [styles.invalid]: !formValidState.date })} />
+                <input type="date" name="date" id="date" className={classNames(styles.input, { [styles.invalid]: !isValid.date })} />
             </div>
             <div className={styles['form-row']}>
                 <label htmlFor="tag" className={styles['form-label']}>
@@ -80,7 +61,7 @@ function Form({ onSubmit }: FormProps): JSX.Element {
                 </label>
                 <input type="text" name="tag" id="tag" className={classNames(styles.input)} />
             </div>
-            <textarea name="text" id="text" className={classNames(styles.textarea, { [styles.invalid]: !formValidState.text })}></textarea>
+            <textarea name="text" id="text" className={classNames(styles.textarea, { [styles.invalid]: !isValid.text })}></textarea>
             <Button>Save</Button>
         </form>
     );

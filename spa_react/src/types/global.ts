@@ -1,7 +1,8 @@
 type Memory = {
     id: number;
     title: string;
-    date: Date;
+    date: string;
+    tag?: string;
     text: string;
 };
 
