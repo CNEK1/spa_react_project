@@ -38,19 +38,8 @@ function Form({ onSubmit }: FormProps): JSX.Element {
     };
     const addNewMemory = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (e.target instanceof HTMLFormElement) {
-            const formData = new FormData(e.target);
-            const formProps = Object.fromEntries(formData);
-            const memory: Memory = {
-                id: 0,
-                title: formProps.title as string,
-                date: new Date(formProps.date as string).toString(),
-                text: formProps.text as string
-            };
-            dispatchForm({ type: FormActionKind.SUBMIT, payload: memory });
-        } else {
-            console.error('Invalid Target');
-        }
+
+        dispatchForm({ type: FormActionKind.SUBMIT });
     };
     return (
         <form className={styles.form} onSubmit={addNewMemory}>

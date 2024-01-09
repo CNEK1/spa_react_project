@@ -26,12 +26,12 @@ export function formReducer(state: FormState, action: FormAction): FormState {
         case 'RESET_VALIDITY':
             return { ...state, isValid: INITIAL_STATE.isValid };
         case 'SUBMIT': {
-            const textValidity = Boolean(payload!.text?.trim().length);
-            const dateValidity = Boolean(payload!.date.toString() !== 'Invalid Date');
-            const titleValidity = Boolean(payload!.title?.trim().length);
+            const textValidity = Boolean(state.values.text?.trim().length);
+            const dateValidity = Boolean(state.values.date.toString());
+            const titleValidity = Boolean(state.values.title?.trim().length);
 
             return {
-                values: payload!,
+                ...state,
                 isValid: {
                     text: textValidity,
                     title: titleValidity,
