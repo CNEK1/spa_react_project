@@ -28,7 +28,7 @@ function Form({ onSubmit }: FormProps): JSX.Element {
             onSubmit(values);
             dispatchForm({ type: FormActionKind.CLEAR });
         }
-    }, [isFormReadyToSubmit]);
+    }, [isFormReadyToSubmit, onSubmit, values]);
 
     const onChange = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
