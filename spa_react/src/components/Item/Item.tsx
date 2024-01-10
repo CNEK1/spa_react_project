@@ -2,7 +2,7 @@ import styles from './item.module.css';
 import { ItemProps } from './Item.props';
 
 function Item({ title, date, text }: ItemProps): JSX.Element {
-    const formatedDate = date.toLocaleString('en-GB');
+    const formatedDate = date.toLocaleString('en-GB').trimEnd().split('T')[0];
     return (
         <>
             <h2 className={styles.item__header}>{title}</h2>

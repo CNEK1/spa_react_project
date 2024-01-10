@@ -17,7 +17,7 @@ function App(): JSX.Element {
             setData(
                 localStorageData.map((item) => ({
                     ...item,
-                    date: new Date(item.date) as unknown as string
+                    date: new Date(item.date).toISOString()
                 }))
             );
         }
@@ -28,14 +28,14 @@ function App(): JSX.Element {
         }
     }, [data]);
     const addItem = (item: Memory): void => {
-        setData((oldItems: any) => [
+        setData((oldItems: Memory[]) => [
             ...oldItems,
             {
                 id: oldItems.length > 0 ? Math.max(...oldItems.map((i) => i.id)) + 1 : 1,
                 text: item.text,
                 tag: item.tag,
                 title: item.title,
-                date: new Date(item.date)
+                date: new Date(item.date).toISOString()
             }
         ]);
     };
